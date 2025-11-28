@@ -1,0 +1,2 @@
+# linkable
+Event → Chain → Automation
