@@ -5,6 +5,9 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   base: "/linkable/",
+  server: {
+    host: true,
+  },
   plugins: [react()],
   resolve: {
     alias: {

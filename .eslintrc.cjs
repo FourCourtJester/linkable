@@ -27,8 +27,7 @@ module.exports = {
     "prettier",
   ],
   rules: {
-    "prettier/prettier": "warn",
-    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "import/order": [
       "warn",
       {
@@ -36,5 +35,7 @@ module.exports = {
         "newlines-between": "always",
       },
     ],
+    "prettier/prettier": "warn",
+    "react/react-in-jsx-scope": "off",
   },
 }
