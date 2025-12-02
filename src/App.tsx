@@ -1,18 +1,18 @@
-import { useEffect } from "react"
-import { useAtomInstance } from "@zedux/react"
-import { registryAtom } from "@/components/zedux"
+import { useEffect } from 'react'
+import { useAtomInstance } from '@zedux/react'
+import { linkableAtom } from '@/components/zedux'
 
-import "@/scss/app.css"
+import '@/scss/app.css'
 
 function App() {
-  const registry = useAtomInstance(registryAtom, [])
+  const context = useAtomInstance(linkableAtom, [])
 
   useEffect(() => {
-    const { register, unregister } = registry.exports.actions
+    const { register, unregister } = context.exports
 
-    register("../../plugins/obs")
+    register('../../../plugins/obs')
 
-    return () => unregister("obs")
+    return () => unregister('obs')
   }, [])
 
   return <div>foo</div>

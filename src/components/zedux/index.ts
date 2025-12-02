@@ -1,1 +1,1 @@
-export { registryAtom } from "./registry"
+export { linkableAtom } from './linkable'
