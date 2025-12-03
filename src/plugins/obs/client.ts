@@ -37,12 +37,16 @@ export default class OBSClient {
       .catch(console.error)
   }
 
-  disconnect() {
+  // event emitters are all normalized
+  #on(event: keyof OBSEventTypes, fn: OBSListener) {
+    this.#obs.on(event, fn)
+  }
+
+  destroy() {
     this.#obs.disconnect()
   }
 
-  // event emitters are all normalized
-  on(event: keyof OBSEventTypes, fn: OBSListener) {
-    this.#obs.on(event, fn)
+  listen(event: keyof OBSEventTypes, fn: OBSListener) {
+    this.#on(event, fn)
   }
 }

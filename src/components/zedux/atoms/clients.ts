@@ -25,6 +25,9 @@ export const clientsAtom = atom('clients', () => {
     })
     .reduce(destroy, (state: State, id: string) => {
       const _state = { ...state }
+
+      _state?.[id]?.destroy()
+
       delete _state?.[id]
 
       return _state
@@ -36,6 +39,11 @@ export const clientsAtom = atom('clients', () => {
   storeAPI.addExports({
     create: async (plugin: Plugin, config: Record<string, any>) =>
       store.dispatch(create({ plugin, config })),
+    get: (id: string) => {
+      const state = store.getState()
+
+      return state[id] ? state[id] : undefined
+    },
     destroy: (id: string) => store.dispatch(destroy(id)),
   })
 

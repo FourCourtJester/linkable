@@ -1,6 +1,6 @@
-const links = {}
+const links = ['SetSceneItemEnabled']
 
-const events = {}
+const events = ['CurrentProgramSceneChanged']
 
 export default {
   id: 'obs',

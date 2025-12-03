@@ -6,8 +6,15 @@ import type { Store } from '@zedux/react'
 
 export type Plugin = {
   id: string
+  destroy: () => void
 }
 type State = Record<string, Plugin>
+
+// Fills in the blank on local plugins vs external plugins
+function _url(url: string) {
+  if (url.startsWith('/')) return `/linkable/src${url}`
+  return url
+}
 
 // Actions
 
@@ -18,7 +25,7 @@ const remove = actionFactory<string>('registry/remove')
 
 async function register(store: Store<State>, url: string) {
   try {
-    const mod = await import(/* @vite-ignore */ url)
+    const mod = await import(/* @vite-ignore */ _url(url))
     const plugin = mod.default
 
     if (!plugin || !plugin.id) {
