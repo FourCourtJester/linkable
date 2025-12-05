@@ -14,17 +14,17 @@ export class Chain {
     if (!this.#links.length) return false
 
     // Execute the next step
-    const link = this.#links.shift()
-    const client = this.#clients[link.plugin]
+    const { link, params, plugin } = this.#links.shift()
+    const client = this.#clients[plugin]
+
+    this.#context = { ...this.#context, ...payload }
 
     try {
-      if (client === undefined) throw new Error(`Client not found for ${link.plugin}/${link.link}`)
+      if (client === undefined) throw new Error(`Client not found for ${plugin}/${link}`)
 
-      const result = await client[link.link](resolver(link.params, { event: payload }))
+      const result = await client.execute(link, resolver(params, this.#context))
 
-      if (result === false) throw new Error(`${link.plugin}/${link.link} was false, aborting`)
-
-      return result ? this.execute(payload) : false
+      return result === false ? result : this.execute(result)
     } catch (err) {
       console.error(err)
       return false

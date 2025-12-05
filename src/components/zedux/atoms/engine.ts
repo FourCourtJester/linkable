@@ -35,10 +35,10 @@ export const engineAtom = atom('engine', () => {
     }, {})
 
     const event = chain.links.at(0)
-    const listener = chainClients[event.plugin]
+    const plugin = chainClients[event.plugin]
 
-    listener[event.event]((...result) => {
-      new Chain(chain.links.slice(1), chainClients).execute(...result)
+    plugin.on(event.on, (result) => {
+      new Chain(chain.links.slice(1), chainClients).execute(result)
     })
 
     return { ...state, [chain.name]: chain }

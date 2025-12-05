@@ -4,20 +4,20 @@
   "links": [
     {
       "plugin": "obs",
-      "event": "CurrentProgramSceneChanged"
+      "on": "CurrentProgramSceneChanged"
     },
     {
       "plugin": "jsonlogic",
       "link": "evaluate",
       "params": {
-        "==": ["{event.sceneName}", "Scene"]
+        "==": ["{sceneName}", "Scene"]
       }
     },
     {
       "plugin": "obs",
       "link": "SetSceneItemEnabled",
       "params": {
-        "sceneName": "{event.sceneName}",
+        "sceneName": "{sceneName}",
         "sceneItemEnabled": true,
         "sourceName": "ChatBubble"
       }

@@ -22,11 +22,7 @@ function App() {
         const file = await fetch('/linkable/chain.json')
         const json = await file.json()
 
-        const file2 = await fetch('/linkable/chain2.json')
-        const json2 = await file2.json()
-
         context.exports.build(json)
-        context.exports.build(json2)
       } catch (err) {
         console.error(err)
       }

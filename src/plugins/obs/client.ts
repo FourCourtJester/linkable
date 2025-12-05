@@ -1,6 +1,8 @@
 import OBSWebSocket from 'obs-websocket-js/json'
 
-import type { OBSEventTypes } from 'obs-websocket-js/json'
+import Links from './links'
+
+import type { OBSEventTypes, OBSRequestTypes } from 'obs-websocket-js/json'
 
 type OBSClientConfig = {
   host: string
@@ -48,21 +50,15 @@ export default class OBSClient {
 
   // Events
 
-  CurrentProgramSceneChanged(fn: OBSListener) {
-    this.#on('CurrentProgramSceneChanged', fn)
+  on(event: keyof OBSEventTypes, fn: OBSListener) {
+    this.#on(event, fn)
   }
 
   // Requests
 
-  async SetSceneItemEnabled(params: Record<string, any>) {
-    return this.#obs
-      .call('GetSceneItemId', { sceneName: params.sceneName, sourceName: params.sourceName })
-      .then(({ sceneItemId }) =>
-        this.#obs.call('SetSceneItemEnabled', {
-          sceneName: params.sceneName,
-          sceneItemId,
-          sceneItemEnabled: params.sceneItemEnabled,
-        })
-      )
+  async execute(request: keyof OBSRequestTypes, params: Record<string, any>) {
+    return Object.prototype.hasOwnProperty.call(Links, request)
+      ? Links[request](this.#obs, params)
+      : this.#obs.call(request, params)
   }
 }
