@@ -1,8 +1,8 @@
 const TOKEN_REGEX = /\{([\w.$]+)\}/g
 
 function getPath(obj: any, path: string): any {
-  return path.split('.').reduce((acc, key) => {
-    if (acc && typeof acc === 'object' && key in acc) return acc[key]
+  return path.split('.').reduce((leaf, key) => {
+    if (leaf && typeof leaf === 'object' && key in leaf) return leaf[key]
     return undefined
   }, obj)
 }

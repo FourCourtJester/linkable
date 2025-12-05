@@ -10,7 +10,15 @@
       "plugin": "jsonlogic",
       "link": "evaluate",
       "params": {
-        "==": ["{sceneName}", "Scene"]
+        "==": ["{event.sceneName}", "Scene"]
+      }
+    },
+    {
+      "plugin": "core",
+      "link": "Set",
+      "params": {
+        "path": "lastScene",
+        "value": "{event.sceneName}"
       }
     },
     {
@@ -24,7 +32,7 @@
       "plugin": "obs",
       "link": "SetSceneItemEnabled",
       "params": {
-        "sceneName": "{sceneName}",
+        "sceneName": "{event.sceneName}",
         "sceneItemEnabled": true,
         "sourceName": "ChatBubble"
       }

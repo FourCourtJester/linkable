@@ -1,3 +1,4 @@
+import { merge } from 'lodash'
 import { resolver } from '@/toolkits/resolver'
 
 export class Chain {
@@ -17,7 +18,7 @@ export class Chain {
     const { link, params, plugin } = this.#links.shift()
     const client = this.#clients[plugin]
 
-    this.#context = { ...this.#context, ...payload }
+    this.#context = merge(this.#context, payload)
 
     try {
       if (client === undefined) throw new Error(`Client not found for ${plugin}/${link}`)

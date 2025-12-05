@@ -1,4 +1,12 @@
 const links = {
+  Set(params) {
+    return {
+      state: {
+        [params.path]: params.value,
+      },
+    }
+    return undefined
+  },
   Wait(params) {
     const ms = Number(params.amount)
 
