@@ -7,6 +7,7 @@ import {
   injectAtomInstance,
 } from '@zedux/react'
 import { clientsAtom } from './clients'
+import { Chain } from '@/components/chain'
 
 // Typescript Definitions
 
@@ -17,22 +18,28 @@ type State = Record<string, Record<string, any>>
 
 // Actions
 
-const add = actionFactory<Record<string, any>>('chains/build')
+const add = actionFactory<Record<string, any>>('engine/build')
 
 // Exports
 
 // Atom
 
-export const chainsAtom = atom('chains', () => {
+export const engineAtom = atom('engine', () => {
   const allClients = injectAtomInstance(clientsAtom)
 
   const reducer = createReducer({}).reduce(add, (state: State, chain: Record<string, any>) => {
     if (!chain || !chain.links || !chain.links.length) return state
 
-    const event = chain.links.at(0)
-    const client = allClients.exports.get(event.plugin)
+    const chainClients = chain.plugins.reduce((obj, plugin: string) => {
+      return { ...obj, [plugin]: allClients.exports.get(plugin) }
+    }, {})
 
-    client.listen(event.event, console.log)
+    const event = chain.links.at(0)
+    const listener = chainClients[event.plugin]
+
+    listener[event.event]((...result) => {
+      new Chain(chain.links.slice(1), chainClients).execute(...result)
+    })
 
     return { ...state, [chain.name]: chain }
   })

@@ -1,5 +1,5 @@
 {
-  "name": "Test Chain Show ChatBubble v1.0",
+  "name": "Test Chain Hide ChatBubble v1.0",
   "plugins": ["jsonlogic", "obs"],
   "links": [
     {
@@ -10,15 +10,15 @@
       "plugin": "jsonlogic",
       "link": "evaluate",
       "params": {
-        "==": ["{event.sceneName}", "Scene"]
+        "!==": ["{event.sceneName}", "Scene"]
       }
     },
     {
       "plugin": "obs",
       "link": "SetSceneItemEnabled",
       "params": {
-        "sceneName": "{event.sceneName}",
-        "sceneItemEnabled": true,
+        "sceneName": "Scene",
+        "sceneItemEnabled": false,
         "sourceName": "ChatBubble"
       }
     }

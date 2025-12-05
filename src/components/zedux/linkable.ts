@@ -1,17 +1,17 @@
 import { api, atom, createStore, injectAtomInstance } from '@zedux/react'
-import { chainsAtom, clientsAtom, credentialsAtom, registryAtom } from '@/components/zedux/atoms'
+import { engineAtom, clientsAtom, credentialsAtom, registryAtom } from '@/components/zedux/atoms'
 
 // Typescript Definitions
 
 // Atom
 
 export const linkableAtom = atom('linkable', () => {
-  const chains = injectAtomInstance(chainsAtom)
+  const engine = injectAtomInstance(engineAtom)
   const clients = injectAtomInstance(clientsAtom)
   const credentials = injectAtomInstance(credentialsAtom)
   const registry = injectAtomInstance(registryAtom)
 
-  const { build } = chains.exports
+  const { build } = engine.exports
   const { create, destroy } = clients.exports
   const { add, remove } = credentials.exports
   const { register, unregister } = registry.exports
@@ -19,7 +19,7 @@ export const linkableAtom = atom('linkable', () => {
   const store = createStore()
 
   store.use({
-    chains: chains.store,
+    engine: engine.store,
     clients: clients.store,
     credentials: credentials.store,
     registry: registry.store,

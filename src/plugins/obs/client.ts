@@ -46,7 +46,23 @@ export default class OBSClient {
     this.#obs.disconnect()
   }
 
-  listen(event: keyof OBSEventTypes, fn: OBSListener) {
-    this.#on(event, fn)
+  // Events
+
+  CurrentProgramSceneChanged(fn: OBSListener) {
+    this.#on('CurrentProgramSceneChanged', fn)
+  }
+
+  // Requests
+
+  async SetSceneItemEnabled(params: Record<string, any>) {
+    return this.#obs
+      .call('GetSceneItemId', { sceneName: params.sceneName, sourceName: params.sourceName })
+      .then(({ sceneItemId }) =>
+        this.#obs.call('SetSceneItemEnabled', {
+          sceneName: params.sceneName,
+          sceneItemId,
+          sceneItemEnabled: params.sceneItemEnabled,
+        })
+      )
   }
 }

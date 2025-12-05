@@ -7,7 +7,7 @@ function getPath(obj: any, path: string): any {
   }, obj)
 }
 
-export function resolve(value: any, data: any): any {
+export function resolver(value: any, data: any): any {
   if (typeof value === 'string') {
     return value.replace(TOKEN_REGEX, (_, path) => {
       const v = getPath(data, path)
@@ -17,14 +17,14 @@ export function resolve(value: any, data: any): any {
 
   // If array → recurse
   if (Array.isArray(value)) {
-    return value.map((item) => resolve(item, data))
+    return value.map((item) => resolver(item, data))
   }
 
   // If object → recurse on each key
   if (value && typeof value === 'object') {
     const result: Record<string, any> = {}
     for (const key in value) {
-      result[key] = resolve(value[key], data)
+      result[key] = resolver(value[key], data)
     }
     return result
   }
