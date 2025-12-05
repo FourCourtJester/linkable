@@ -1,6 +1,6 @@
 {
   "name": "Test Chain Show ChatBubble v1.0",
-  "plugins": ["jsonlogic", "obs"],
+  "plugins": ["core", "jsonlogic", "obs"],
   "links": [
     {
       "plugin": "obs",
@@ -11,6 +11,13 @@
       "link": "evaluate",
       "params": {
         "==": ["{sceneName}", "Scene"]
+      }
+    },
+    {
+      "plugin": "core",
+      "link": "Wait",
+      "params": {
+        "amount": 5000
       }
     },
     {

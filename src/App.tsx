@@ -10,6 +10,7 @@ function App() {
   useEffect(() => {
     const { register, unregister } = context.exports
 
+    register('/plugins/core')
     register('/plugins/obs')
     register('/plugins/jsonlogic')
 
