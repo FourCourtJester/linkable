@@ -1,14 +1,11 @@
 const links = {
   RNG(params) {
-    const num = {
-      min: params.min ?? 0,
-      max: params.max ?? 100,
-    }
+    if (params.path === undefined) throw new Error(`No path submitted for RNG: ${params}`)
 
-    const min = Number(num.min)
-    const max = Number(num.max)
+    const min = Number(params.min ?? 0)
+    const max = Number(params.max ?? 100)
 
-    if (isNaN(min) || isNaN(max)) throw new Error(`Unknown parameters for RNG: ${params}`)
+    if (isNaN(min) || isNaN(max)) throw new Error(`Unknown min & max parameters for RNG: ${params}`)
 
     return {
       state: {
@@ -17,6 +14,9 @@ const links = {
     }
   },
   SetState(params) {
+    if (params.path === undefined) throw new Error(`No path submitted for SetState: ${params}`)
+    if (params.value === undefined) throw new Error(`No value submitted for SetState: ${params}`)
+
     return {
       state: {
         [params.path]: params.value,
@@ -24,9 +24,11 @@ const links = {
     }
   },
   Wait(params) {
+    if (params.path === undefined) throw new Error(`No path submitted for Wait: ${params}`)
+
     const ms = Number(params.amount)
 
-    if (isNaN(ms)) throw new Error(`Unknown wait amount: ${params.amount}`)
+    if (isNaN(ms)) throw new Error(`Unknown Wait amount: ${params}`)
 
     return new Promise((resolve) => setTimeout(resolve, ms)).then(() => undefined)
   },
