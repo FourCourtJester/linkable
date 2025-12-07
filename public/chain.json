@@ -15,10 +15,19 @@
     },
     {
       "plugin": "core",
-      "link": "Set",
+      "link": "SetState",
       "params": {
-        "path": "lastScene",
+        "path": "currentScene",
         "value": "{event.sceneName}"
+      }
+    },
+    {
+      "plugin": "core",
+      "link": "RNG",
+      "params": {
+        "path": "randomNumber",
+        "min": 0,
+        "max": 100
       }
     },
     {

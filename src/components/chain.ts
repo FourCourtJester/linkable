@@ -25,7 +25,7 @@ export class Chain {
 
       const result = await client.execute(link, resolver(params, this.#context))
 
-      return result === false ? result : this.execute(result)
+      return result === false ? result : await this.execute(result)
     } catch (err) {
       console.error(err)
       return false
